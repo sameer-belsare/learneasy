@@ -40,7 +40,7 @@ class _LoginPageState extends State<Login> {
       body: StreamBuilder(
           stream: Firestore.instance.collection('user').snapshots(),
           builder: (context, snapshot) {
-            if(!snapshot.hasData) return const Text('No data..');
+            if(!snapshot.hasData) return const Text('');
             return Container(
               //margin: const EdgeInsets.only(left: 10.0, top: 20.0),
               margin: new EdgeInsets.all(15.0),
@@ -129,12 +129,12 @@ class _LoginPageState extends State<Login> {
             content: new Text("Login success"),
             duration: Duration(milliseconds: 500),
           ));
-          if(documents.data['usertype'] == null) {
+          if(documents.data['usertype'].compareTo('Learner') == 0) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) => new LearnScreen()));
+                builder: (BuildContext context) => new LearnScreen(email: documents.data['email'].toString(), usertype: documents.data['usertype'].toString())));
           } else if(documents.data['usertype'].toString().compareTo('Mentor') == 0){
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) => new MentorScreen()));
+                builder: (BuildContext context) => new MentorScreen(email: documents.data['email'].toString(), usertype: documents.data['usertype'].toString())));
           }
           result = true;
           break;
@@ -257,10 +257,7 @@ class _LoginPageState extends State<Login> {
             _signupPhone = val;
           },
         ),
-    Container(
-    child: Row(
-    children: <Widget>[
-        Text("Your are $_signupUserType :   ",style: TextStyle( fontWeight:FontWeight.bold)),
+        //Text("Your are $_signupUserType :   ",style: TextStyle( fontWeight:FontWeight.bold)),
         DropdownButton<String>(
           hint: Text('select other'),
         items: <String>['Mentor', 'Learner'].map((String value) {
@@ -274,7 +271,7 @@ class _LoginPageState extends State<Login> {
             _signupUserType = value;
           });
         },
-        )])),
+        ),
         SizedBox(
           height: 10.0,
         ),
@@ -379,8 +376,13 @@ class _LoginPageState extends State<Login> {
         dataMap['phone'] = _signupPhone;
         dataMap['usertype'] = _signupUserType;
         await tx.set(ds.reference, dataMap).then((void val) {
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) => new LearnScreen(email: _signupEmail, usertype: _signupUserType)));
+          if(_signupUserType.compareTo('Learner') == 0) {
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (BuildContext context) => new LearnScreen(email: _signupEmail, usertype: _signupUserType)));
+          } else if(_signupUserType.toString().compareTo('Mentor') == 0) {
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (BuildContext context) => new MentorScreen(email: _signupEmail, usertype: _signupUserType)));
+          }
         });
       } else {
         Scaffold.of(_signupFormKey.currentContext).showSnackBar(new SnackBar(
