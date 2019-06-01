@@ -47,9 +47,15 @@ class LessonItems extends StatelessWidget {
           trailing:
           Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
           onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    LearnDetail(title: lesson)));
+            if(usertype.toString().compareTo('Learner') == 0) {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      LearnDetail(title: lesson)));
+            } else {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      ChatWindow(userName: "Alok", usertype: usertype, email: email,)));
+            }
           },),
       ),
     );

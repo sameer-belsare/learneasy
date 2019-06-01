@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:learneasy/view/screen/ChatWindow.dart';
 
 class HomePageDialogflowV2 extends StatefulWidget {
   HomePageDialogflowV2({Key key, this.title}) : super(key: key);
@@ -65,6 +68,13 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
     setState(() {
       _messages.insert(0, message);
     });
+    if(response.queryResult.parameters.isNotEmpty){
+//      CircularProgressIndicator();
+//      sleep(const Duration(seconds: 5));
+
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(
+          builder: (BuildContext context) => new ChatWindow(userName: "", usertype: "", email: "",)));
+    }
   }
 
   void _handleSubmitted(String text) {
