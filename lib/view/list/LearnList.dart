@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learneasy/view/list/LessonItems.dart';
 
 class LearnList extends StatefulWidget {
-  /*LearnList(String s){
-    this.title = s;
-  }*/
+
   String title;
 
   var email;

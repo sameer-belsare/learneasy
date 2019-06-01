@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:learneasy/data/local/db/table/Chat.dart';
+import 'package:learneasy/data/firebase/db/table/Chat.dart';
 
 class LiveChat extends StatefulWidget {
   var userName;
   var email;
   var usertype;
   LiveChat({this.userName, this.email, this.usertype});
-
-  //final String title;
 
   @override
   _LiveChat createState() => new _LiveChat();

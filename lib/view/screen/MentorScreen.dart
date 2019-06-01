@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learneasy/view/screen/LearnScreen.dart';
 import 'package:learneasy/view/list/LearnList.dart';
 
 import 'package:learneasy/view/screen/Login.dart';

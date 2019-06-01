@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learneasy/view/list/LessonItems.dart';
-import 'package:learneasy/view/list/LearnDetailList.dart';
 import 'package:learneasy/view/list/LessionDetailItem.dart';
 
 class LearnDetailList extends StatefulWidget {

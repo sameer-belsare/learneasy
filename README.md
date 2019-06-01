@@ -1,4 +1,11 @@
 # Learneasy
+LearnEasy provides a platform for learners as well as mentors
+
+LearnEasy makes it easy to learn and teach languages
+
+Learn with help of Bots
+
+Advance learning with the help of experts
 
 # Presentation
 https://docs.google.com/presentation/d/1JDRABB7G9buMokTXxY0OY6cUwUo2QH4mUK5dVHjDqGE/edit?usp=sharing

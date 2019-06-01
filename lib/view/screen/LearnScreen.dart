@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:learneasy/view/list/LearnList.dart';
-
 import 'package:learneasy/view/screen/Login.dart';
 
 class LearnScreen extends StatefulWidget {
