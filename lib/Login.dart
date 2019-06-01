@@ -110,10 +110,10 @@ class _LoginPageState extends State<Login> {
   }
 
   void performLogin(AsyncSnapshot snapshot) {
-    Scaffold.of(context).showSnackBar(new SnackBar(
+    /*Scaffold.of(context).showSnackBar(new SnackBar(
       content: new Text("Login clicked"),
       duration: Duration(milliseconds: 100),
-    ));
+    ));*/
     bool result = false;
     if(_loginFormKey.currentState.validate()) {
       _loginFormKey.currentState.save();
@@ -121,19 +121,19 @@ class _LoginPageState extends State<Login> {
       for(DocumentSnapshot documents in snapshot.data.documents) {
         if(documents.data['email'].toString().compareTo(_loginEmail) == 0 &&
             documents.data['password'].toString().compareTo(_loginPassword) == 0) {
-          Scaffold.of(context).showSnackBar(new SnackBar(
+          /*Scaffold.of(context).showSnackBar(new SnackBar(
             content: new Text("Login success"),
             duration: Duration(milliseconds: 100),
-          ));
+          ));*/
           result = true;
           break;
         }
       }
       if(result == false) {
-        Scaffold.of(context).showSnackBar(new SnackBar(
+        /*Scaffold.of(context).showSnackBar(new SnackBar(
           content: new Text("Invalid credentials"),
           duration: Duration(milliseconds: 100),
-        ));
+        ));*/
       }
     } else {
       setState(() {
@@ -264,10 +264,10 @@ class _LoginPageState extends State<Login> {
   }
 
   void performSignup() {
-    Scaffold.of(context).showSnackBar(new SnackBar(
+    /*Scaffold.of(context).showSnackBar(new SnackBar(
       content: new Text("Register clicked"),
       duration: Duration(milliseconds: 200),
-    ));
+    ));*/
     if(_signupFormKey.currentState.validate()) {
       _signupFormKey.currentState.save();
 
@@ -284,10 +284,10 @@ class _LoginPageState extends State<Login> {
         ));
       }*/
       createUser();
-      Scaffold.of(context).showSnackBar(new SnackBar(
+      /*Scaffold.of(context).showSnackBar(new SnackBar(
         content: new Text("Signup success"),
         duration: Duration(milliseconds: 100),
-      ));
+      ));*/
     } else {
       setState(() {
         _signupAutoValidate = true;
