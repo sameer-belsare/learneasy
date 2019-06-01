@@ -371,7 +371,7 @@ class _LoginPageState extends State<Login> {
         dataMap['usertype'] = _signupUserType;
         await tx.set(ds.reference, dataMap).then((void val) {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) => new HomeScreen()));
+              builder: (BuildContext context) => new LearnScreen(email: _signupEmail, usertype: _signupUserType)));
         });
       } else {
         Scaffold.of(_signupFormKey.currentContext).showSnackBar(new SnackBar(

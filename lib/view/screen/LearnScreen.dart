@@ -12,6 +12,10 @@ import 'package:learneasy/view/list/LearnList.dart';
 class LearnScreen extends StatefulWidget {
 
 
+  var email;
+  var usertype;
+  LearnScreen({this.email, this.usertype});
+
   @override
   _LearnScreenState createState() => _LearnScreenState();
 }
@@ -35,7 +39,7 @@ class _LearnScreenState extends State<LearnScreen>
         title: Text('Learn Easy', style: TextStyle(color: Colors.white)),
        backgroundColor: Colors.deepOrange,
        ),
-        body: LearnList('Learn English'),
+        body: LearnList(email: widget.email, title: 'Learn English', usertype: widget.usertype),
       ),
     );
   }

@@ -9,8 +9,10 @@ import 'package:learneasy/view/screen/LearnDetail.dart';
 class LessonItems extends StatelessWidget {
   BuildContext context;
   final String lesson;
+  var email;
+  var usertype;
 
-  LessonItems(@required this.lesson);
+  LessonItems(@required this.lesson, this.email, this.usertype);
 
   @override
   Widget build(BuildContext context) {
