@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Chat.dart';
 
 class ChatWindow extends StatefulWidget {
   var userName;
@@ -10,6 +12,11 @@ class ChatWindow extends StatefulWidget {
 class _ChatWindowState extends State<ChatWindow> {
   String text = 'ABC';
   TextEditingController textController = TextEditingController();
+
+  String _chatAgentId = '1';
+  String _chatAgentMessage = 'Hi';
+  String _chatUserId = '2';
+  String _chatUserMessage = 'Hello';
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +52,8 @@ class _ChatWindowState extends State<ChatWindow> {
                               text = text + '\n' + textController.text;
                               textController.text = '';
                             });
+                            _pushChat();
+                            _getChat();
                           }),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -62,5 +71,42 @@ class _ChatWindowState extends State<ChatWindow> {
           )),
       debugShowCheckedModeBanner: false,
     );
+  }
+
+  _getChat() {
+    Firestore db = Firestore.instance;
+    final TransactionHandler createTransaction = (Transaction tx) async {
+      final DocumentSnapshot ds = await tx.get(db.collection('chat').document());
+
+      QuerySnapshot querySnapshot = await Firestore.instance. collection("chat").getDocuments();
+      for(DocumentSnapshot documents in querySnapshot.documents) {
+        print(documents.data['agentid'].toString());
+        print(documents.data['agentmessage'].toString());
+        print(documents.data['userid'].toString());
+        print(documents.data['usermessage'].toString());
+      }
+    };
+  }
+
+  Future<Chat> _pushChat() {
+    Firestore db = Firestore.instance;
+    final TransactionHandler createTransaction = (Transaction tx) async {
+      final DocumentSnapshot ds = await tx.get(
+          db.collection('chat').document());
+      var dataMap = new Map<String, dynamic>();
+
+      dataMap['agentid'] = _chatAgentId;
+      dataMap['agentmessage'] = _chatAgentMessage;
+      dataMap['userid'] = _chatUserId;
+      dataMap['usermessage'] = _chatUserMessage;
+      await tx.set(ds.reference, dataMap);
+      return dataMap;
+    };
+    return Firestore.instance.runTransaction(createTransaction).then((mapData) {
+      return Chat.fromMap(mapData);
+    }).catchError((error) {
+      print('error: $error');
+      return null;
+    });
   }
 }
