@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 30.0,
             ),
             Text('Learn Easy',
-                style: TextStyle(color: Colors.blueGrey, fontSize: 30)),
+                style: TextStyle(color: Colors.white, fontSize: 30)),
           ],
         ),
       ),
