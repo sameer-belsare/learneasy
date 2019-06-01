@@ -54,7 +54,7 @@ class LessonItems extends StatelessWidget {
             } else {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      ChatWindow(userName: "test", usertype: usertype, email: email,)));
+                      ChatWindow(userName: "Alok", usertype: usertype, email: email,)));
             }
           },),
       ),
