@@ -266,6 +266,55 @@ class _LoginPageState extends State<Login> {
         SizedBox(
           height: 10.0,
         ),
+
+        Container(
+          child: Row(
+            children: <Widget>[
+
+              Text('Language : ',style: TextStyle( fontWeight:FontWeight.bold),),
+              Text('English'),
+              Checkbox(
+                value: false,
+                onChanged: (val){
+
+                },
+              ),
+              Text('Spanish'),
+              Checkbox(
+                value: false,
+                onChanged: (val){
+
+                },
+              )
+            ],
+          ),
+
+    ),
+
+        Container(
+          child: Row(
+
+            children: <Widget>[
+              Text('Skills : ',style: TextStyle( fontWeight:FontWeight.bold)),
+              Text('Tenses'),
+              Checkbox(
+                value: false,
+                onChanged: (val){
+
+                },
+              ),
+              Text('Prepositions'),
+              Checkbox(
+                value: false,
+                onChanged: (val){
+
+                },
+              )
+            ],
+          ),
+
+        ),
+
         RaisedButton(
           onPressed: performSignup,
           child: new Text('SignUp'),
