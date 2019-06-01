@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "351237350022",
+    "firebase_url": "https://learneasy-86ee3.firebaseio.com",
+    "project_id": "learneasy-86ee3",
+    "storage_bucket": "learneasy-86ee3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351237350022:android:c7942e12e6c9edda",
+        "android_client_info": {
+          "package_name": "flutterazzi.learneasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351237350022-h5hbgblnh91s22q70gs6u38o27onblvq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1s1P7YxnWtuzbjHBPxVrGU7RwL_-2TC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351237350022-h5hbgblnh91s22q70gs6u38o27onblvq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
