@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen>
       home: Scaffold(
         appBar: AppBar(
           title: Text('WhatsApp', style: TextStyle(color: Colors.white)),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.deepOrange,
           actions: <Widget>[
             IconButton(icon: Icon(FontAwesomeIcons.search), onPressed: () {}),
             IconButton(
