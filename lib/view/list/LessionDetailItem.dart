@@ -4,13 +4,11 @@ import 'package:learneasy/model/Chats.dart';
 import 'package:learneasy/view/screen/ChatWindow.dart';
 import 'package:learneasy/dialogflow/DialogFlowBotView.dart';
 import 'package:learneasy/view/list/LearnDetailList.dart';
-import 'package:learneasy/view/screen/LearnDetail.dart';
 
-class LessonItems extends StatelessWidget {
+class LessonDetailItems extends StatelessWidget {
   BuildContext context;
-  final String lesson;
-
-  LessonItems(@required this.lesson);
+  final String title;
+  LessonDetailItems({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +29,7 @@ class LessonItems extends StatelessWidget {
             child: Icon(FontAwesomeIcons.language, color: Colors.white),
           ),
           title: Text(
-            lesson,
+            title,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
@@ -39,7 +37,7 @@ class LessonItems extends StatelessWidget {
           subtitle: Row(
             children: <Widget>[
               Icon(Icons.linear_scale, color: Colors.yellowAccent),
-              Text(" Intermediate", style: TextStyle(color: Colors.white))
+              Text(" ", style: TextStyle(color: Colors.white))
             ],
           ),
           trailing:
@@ -47,7 +45,7 @@ class LessonItems extends StatelessWidget {
           onTap: (){
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    LearnDetail(title: lesson)));
+                    HomePageDialogflowV2(title: title)));
           },),
       ),
     );

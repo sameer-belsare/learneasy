@@ -14,8 +14,6 @@ class _LearnListState extends State<LearnList> {
     // TODO: implement initState
     super.initState();
     learnList.add("Learn English");
-    learnList.add("Learn Spanish");
-    learnList.add("Learn Hindi");
   }
 
   @override
