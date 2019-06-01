@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learneasy/view/screen/LearnScreen.dart';
 import 'package:learneasy/view/list/LearnList.dart';
 
-import '../../Login.dart';
+import 'package:learneasy/view/screen/Login.dart';
 
 class MentorScreen extends StatefulWidget {
   var email;

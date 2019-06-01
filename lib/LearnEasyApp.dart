@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'view/screen/SplashScreen.dart';
-import 'Login.dart';
+import 'package:learneasy/view/screen/Login.dart';
 
 void main() => runApp(LearnEasyApp());
 
