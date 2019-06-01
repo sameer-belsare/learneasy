@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:learneasy/view/screen/LearnScreen.dart';
 import 'package:learneasy/view/list/LearnList.dart';
 
+import '../../Login.dart';
+
 class MentorScreen extends StatefulWidget {
   var email;
   var usertype;
@@ -29,6 +31,18 @@ class _MentorScreen extends State<MentorScreen>
         appBar: AppBar(
           title: Text('Learn Easy', style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.deepOrange,
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: FlatButton(
+                onPressed: () {
+                  // Doing Pop and Push for the smooth closing animation
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                      builder: (BuildContext context) => new Login(title: 'SignIn')));
+                },
+                child: Text('Logout', style: TextStyle(color: Colors.white)),
+              ),
+            )] ,
         ),
         body: LearnList(email: widget.email, title: 'I am ready', usertype: widget.usertype),
       ),

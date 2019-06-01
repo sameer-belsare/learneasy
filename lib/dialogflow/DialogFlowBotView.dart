@@ -14,6 +14,17 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
 
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => connectToFriday());
+  }
+
+  void connectToFriday(){
+    Response("Tenses");
+  }
+
   Widget _buildTextComposer() {
     return new IconTheme(
       data: new IconThemeData(color: Colors.deepOrange  ),
@@ -50,7 +61,6 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
       text: response.getMessage() ?? new CardDialogflow(response.getListMessage()[0]).title,
       name: "Friday",
       type: false,
-
     );
     setState(() {
       _messages.insert(0, message);
@@ -61,7 +71,7 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
-      name: "Rances",
+      name: "Mentee",
       type: true,
     );
     setState(() {
@@ -74,7 +84,7 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Learn Tenses with Friday"),
+        title: new Text("Learn with Friday - AI"),
         backgroundColor: Colors.deepOrange,
       ),
       body: new Column(children: <Widget>[
