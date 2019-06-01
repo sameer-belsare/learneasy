@@ -9,7 +9,6 @@ import 'package:learneasy/view/screen/LearnDetail.dart';
 import 'package:learneasy/view/list/LearnList.dart';
 import 'package:learneasy/view/list/LearnDetailList.dart';
 
-
 class LearnDetail extends StatefulWidget {
   final String title;
   LearnDetail({Key key, this.title}) : super(key: key);
@@ -20,9 +19,6 @@ class LearnDetail extends StatefulWidget {
 
 class _LearnDetailState extends State<LearnDetail>
     with SingleTickerProviderStateMixin {
-
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -35,7 +31,8 @@ class _LearnDetailState extends State<LearnDetail>
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Select lesson section', style: TextStyle(color: Colors.white)),
+          title: Text('Select lesson section',
+              style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.deepOrange,
         ),
         body: LearnDetailList(title: widget.title),

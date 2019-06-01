@@ -15,8 +15,6 @@ class MentorScreen extends StatefulWidget {
 
 class _MentorScreen extends State<MentorScreen>
     with SingleTickerProviderStateMixin {
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -38,13 +36,18 @@ class _MentorScreen extends State<MentorScreen>
                 onPressed: () {
                   // Doing Pop and Push for the smooth closing animation
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (BuildContext context) => new Login(title: 'SignIn')));
+                      builder: (BuildContext context) =>
+                          new Login(title: 'SignIn')));
                 },
                 child: Text('Logout', style: TextStyle(color: Colors.white)),
               ),
-            )] ,
+            )
+          ],
         ),
-        body: LearnList(email: widget.email, title: 'I am ready', usertype: widget.usertype),
+        body: LearnList(
+            email: widget.email,
+            title: 'I am ready',
+            usertype: widget.usertype),
       ),
     );
   }

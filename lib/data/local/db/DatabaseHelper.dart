@@ -59,7 +59,14 @@ class DatabaseHelper {
   Future<ChatTable> queryChats(int id) async {
     Database db = await database;
     List<Map> maps = await db.query(tableChats,
-        columns: [columnId, columnTitle, columnDirector,columnProducer,columnReleaseDate,columnOpeningCrawl],
+        columns: [
+          columnId,
+          columnTitle,
+          columnDirector,
+          columnProducer,
+          columnReleaseDate,
+          columnOpeningCrawl
+        ],
         where: '$columnId = ?',
         whereArgs: [id]);
     if (maps.length > 0) {
@@ -70,10 +77,16 @@ class DatabaseHelper {
 
   Future<List<Chats>> queryChatsAll() async {
     Database db = await database;
-    List<Map> maps = await db.query(tableChats,
-        columns: [columnId, columnTitle, columnDirector,columnProducer,columnReleaseDate,columnOpeningCrawl]);
+    List<Map> maps = await db.query(tableChats, columns: [
+      columnId,
+      columnTitle,
+      columnDirector,
+      columnProducer,
+      columnReleaseDate,
+      columnOpeningCrawl
+    ]);
     List<Chats> chats = new List();
-    for(int i=0; i < maps.length; i++){
+    for (int i = 0; i < maps.length; i++) {
       Chats chat = new Chats();
       ChatTable chatTable = ChatTable.fromMap(maps.elementAt(i));
       chat.title = chatTable.title;
@@ -88,19 +101,19 @@ class DatabaseHelper {
   }
 
   saveChats(List<Chats> chatList) async {
-    for(int i=0 ; i<chatList.length;i++){
+    for (int i = 0; i < chatList.length; i++) {
       ChatTable chat = ChatTable();
       chat.title = chatList.elementAt(i).title;
       chat.director = chatList.elementAt(i).director;
       chat.producer = chatList.elementAt(i).producer;
       chat.releaseDate = chatList.elementAt(i).releaseDate.toString();
       chat.openingCrawl = chatList.elementAt(i).openingCrawl;
-      int  id = await insert(chat);
+      int id = await insert(chat);
       print('save id ===>>> $id');
     }
   }
 
-  Future<List<Chats>> getChatsFromDB() async{
+  Future<List<Chats>> getChatsFromDB() async {
     return await queryChatsAll();
   }
 

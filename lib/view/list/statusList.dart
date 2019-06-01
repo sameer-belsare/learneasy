@@ -18,8 +18,7 @@ class _StatusListState extends State<StatusList> {
     return FutureBuilder(
       future: DatabaseHelper.instance.getChatsFromDB(),
       builder: (_, AsyncSnapshot<List<Chats>> snapShot) {
-        if (!snapShot.hasData)
-          return new Container();
+        if (!snapShot.hasData) return new Container();
         if (snapShot.hasData) {
           var chats = snapShot.data;
 
@@ -37,6 +36,4 @@ class _StatusListState extends State<StatusList> {
       },
     );
   }
-
 }
-

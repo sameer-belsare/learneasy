@@ -40,7 +40,7 @@ class _LoginPageState extends State<Login> {
       body: StreamBuilder(
           stream: Firestore.instance.collection('user').snapshots(),
           builder: (context, snapshot) {
-            if(!snapshot.hasData) return const Text('');
+            if (!snapshot.hasData) return const Text('');
             return Container(
               //margin: const EdgeInsets.only(left: 10.0, top: 20.0),
               margin: new EdgeInsets.all(15.0),
@@ -50,8 +50,7 @@ class _LoginPageState extends State<Login> {
                 child: LoginFormUI(snapshot),
               ),
             );
-          }
-      ),
+          }),
     );
   }
 
@@ -62,9 +61,11 @@ class _LoginPageState extends State<Login> {
           decoration: const InputDecoration(labelText: 'Email'),
           keyboardType: TextInputType.emailAddress,
           validator: (String arg) {
-            if(arg.length <= 0)
+            if (arg.length <= 0)
               return 'Email must not be empty';
-            else if(!new RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(arg))
+            else if (!new RegExp(
+                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                .hasMatch(arg))
               return 'Invalid Email address';
             else
               return null;
@@ -73,28 +74,26 @@ class _LoginPageState extends State<Login> {
             _loginEmail = val;
           },
         ),
-        new Stack(
-            alignment: const Alignment(1.0, 1.0),
-            children: <Widget>[
-              TextFormField(
-                obscureText: _loginObscureText,
-                decoration: const InputDecoration(labelText: 'Password',
-                ),
-                validator: (String arg) {
-                  if(arg.length <= 0)
-                    return 'Password must not be empty';
-                  else
-                    return null;
-                },
-                onSaved: (String val) {
-                  _loginPassword = val;
-                },
-              ),
-              new FlatButton(
-                  onPressed: _toggle,
-                  child: new Text(_loginObscureText ? "Show" : "Hide")),
-            ]
-        ),
+        new Stack(alignment: const Alignment(1.0, 1.0), children: <Widget>[
+          TextFormField(
+            obscureText: _loginObscureText,
+            decoration: const InputDecoration(
+              labelText: 'Password',
+            ),
+            validator: (String arg) {
+              if (arg.length <= 0)
+                return 'Password must not be empty';
+              else
+                return null;
+            },
+            onSaved: (String val) {
+              _loginPassword = val;
+            },
+          ),
+          new FlatButton(
+              onPressed: _toggle,
+              child: new Text(_loginObscureText ? "Show" : "Hide")),
+        ]),
         SizedBox(
           height: 10.0,
         ),
@@ -109,7 +108,14 @@ class _LoginPageState extends State<Login> {
           height: 50.0,
         ),
         InkWell(
-          child: Text('SignUp', style: new TextStyle(color: Colors.deepOrange,fontSize: 18, decoration: TextDecoration.underline,fontWeight: FontWeight.bold),),
+          child: Text(
+            'SignUp',
+            style: new TextStyle(
+                color: Colors.deepOrange,
+                fontSize: 18,
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold),
+          ),
           onTap: () => openSignupScreen(),
         )
       ],
@@ -119,28 +125,36 @@ class _LoginPageState extends State<Login> {
   void performLogin(AsyncSnapshot snapshot) {
     FocusScope.of(context).requestFocus(new FocusNode());
     bool result = false;
-    if(_loginFormKey.currentState.validate()) {
+    if (_loginFormKey.currentState.validate()) {
       _loginFormKey.currentState.save();
 
-      for(DocumentSnapshot documents in snapshot.data.documents) {
-        if(documents.data['email'].toString().compareTo(_loginEmail) == 0 &&
-            documents.data['password'].toString().compareTo(_loginPassword) == 0) {
+      for (DocumentSnapshot documents in snapshot.data.documents) {
+        if (documents.data['email'].toString().compareTo(_loginEmail) == 0 &&
+            documents.data['password'].toString().compareTo(_loginPassword) ==
+                0) {
           Scaffold.of(_loginFormKey.currentContext).showSnackBar(new SnackBar(
             content: new Text("Login success"),
             duration: Duration(milliseconds: 500),
           ));
-          if(documents.data['usertype'].compareTo('Learner') == 0) {
+          if (documents.data['usertype'].compareTo('Learner') == 0) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) => new LearnScreen(email: documents.data['email'].toString(), usertype: documents.data['usertype'].toString())));
-          } else if(documents.data['usertype'].toString().compareTo('Mentor') == 0){
+                builder: (BuildContext context) => new LearnScreen(
+                    email: documents.data['email'].toString(),
+                    usertype: documents.data['usertype'].toString())));
+          } else if (documents.data['usertype']
+                  .toString()
+                  .compareTo('Mentor') ==
+              0) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) => new MentorScreen(email: documents.data['email'].toString(), usertype: documents.data['usertype'].toString())));
+                builder: (BuildContext context) => new MentorScreen(
+                    email: documents.data['email'].toString(),
+                    usertype: documents.data['usertype'].toString())));
           }
           result = true;
           break;
         }
       }
-      if(result == false) {
+      if (result == false) {
         Scaffold.of(_loginFormKey.currentContext).showSnackBar(new SnackBar(
           content: new Text("Invalid credentials"),
           duration: Duration(milliseconds: 500),
@@ -168,26 +182,24 @@ class _LoginPageState extends State<Login> {
   void openSignupScreen() {
     Navigator.of(context).pushReplacement(
       //Navigator.pushReplacement(context,
-      new MaterialPageRoute<void>(
-          builder: (BuildContext context) {
-            return new Scaffold(
-              appBar: new AppBar(
-                backgroundColor: Colors.deepOrange,
-                title: const Text('SignUp'),
-              ),
-              resizeToAvoidBottomPadding: false,
-              body: new Container(
-                //margin: const EdgeInsets.only(left: 10.0, top: 20.0),
-                margin: new EdgeInsets.all(15.0),
-                child: new Form(
-                  key: _signupFormKey,
-                  autovalidate: _signupAutoValidate,
-                  child: SignupFormUI(),
-                ),
-              ),
-            );
-          }
-      ),
+      new MaterialPageRoute<void>(builder: (BuildContext context) {
+        return new Scaffold(
+          appBar: new AppBar(
+            backgroundColor: Colors.deepOrange,
+            title: const Text('SignUp'),
+          ),
+          resizeToAvoidBottomPadding: false,
+          body: new Container(
+            //margin: const EdgeInsets.only(left: 10.0, top: 20.0),
+            margin: new EdgeInsets.all(15.0),
+            child: new Form(
+              key: _signupFormKey,
+              autovalidate: _signupAutoValidate,
+              child: SignupFormUI(),
+            ),
+          ),
+        );
+      }),
     );
   }
 
@@ -198,7 +210,7 @@ class _LoginPageState extends State<Login> {
           decoration: const InputDecoration(labelText: 'Name'),
           keyboardType: TextInputType.text,
           validator: (String arg) {
-            if(arg.length <= 0)
+            if (arg.length <= 0)
               return 'Name must not be empty';
             else
               return null;
@@ -211,9 +223,11 @@ class _LoginPageState extends State<Login> {
           decoration: const InputDecoration(labelText: 'Email'),
           keyboardType: TextInputType.emailAddress,
           validator: (String arg) {
-            if(arg.length <= 0)
+            if (arg.length <= 0)
               return 'Email must not be empty';
-            else if(!new RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(arg))
+            else if (!new RegExp(
+                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                .hasMatch(arg))
               return 'Invalid Email address';
             else
               return null;
@@ -222,33 +236,31 @@ class _LoginPageState extends State<Login> {
             _signupEmail = val;
           },
         ),
-        new Stack(
-            alignment: const Alignment(1.0, 1.0),
-            children: <Widget>[
-              TextFormField(
-                obscureText: _signupObscureText,
-                decoration: const InputDecoration(labelText: 'Password',
-                ),
-                validator: (String arg) {
-                  if(arg.length <= 0)
-                    return 'Password must not be empty';
-                  else
-                    return null;
-                },
-                onSaved: (String val) {
-                  _signupPassword = val;
-                },
-              ),
-              new FlatButton(
-                  onPressed: _signuptoggle,
-                  child: new Text(_signupObscureText ? "Show" : "Hide")),
-            ]
-        ),
+        new Stack(alignment: const Alignment(1.0, 1.0), children: <Widget>[
+          TextFormField(
+            obscureText: _signupObscureText,
+            decoration: const InputDecoration(
+              labelText: 'Password',
+            ),
+            validator: (String arg) {
+              if (arg.length <= 0)
+                return 'Password must not be empty';
+              else
+                return null;
+            },
+            onSaved: (String val) {
+              _signupPassword = val;
+            },
+          ),
+          new FlatButton(
+              onPressed: _signuptoggle,
+              child: new Text(_signupObscureText ? "Show" : "Hide")),
+        ]),
         TextFormField(
           decoration: const InputDecoration(labelText: 'Phone'),
           keyboardType: TextInputType.phone,
           validator: (String arg) {
-            if(arg.length <= 0)
+            if (arg.length <= 0)
               return 'Phone must not be empty';
             else
               return null;
@@ -260,17 +272,17 @@ class _LoginPageState extends State<Login> {
         //Text("Your are $_signupUserType :   ",style: TextStyle( fontWeight:FontWeight.bold)),
         DropdownButton<String>(
           hint: Text('select other'),
-        items: <String>['Mentor', 'Learner'].map((String value) {
-        return DropdownMenuItem<String>(
-        value: value,
-        child: new Text(value),
-        );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            _signupUserType = value;
-          });
-        },
+          items: <String>['Mentor', 'Learner'].map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: new Text(value),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _signupUserType = value;
+            });
+          },
         ),
         SizedBox(
           height: 10.0,
@@ -279,49 +291,38 @@ class _LoginPageState extends State<Login> {
         Container(
           child: Row(
             children: <Widget>[
-
-              Text('Language : ',style: TextStyle( fontWeight:FontWeight.bold)),
+              Text('Language : ',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               Text('English'),
               Checkbox(
                 value: false,
-                onChanged: (val){
-
-                },
+                onChanged: (val) {},
               ),
               Text('Spanish'),
               Checkbox(
                 value: false,
-                onChanged: (val){
-
-                },
+                onChanged: (val) {},
               )
             ],
           ),
-
-    ),
+        ),
 
         Container(
           child: Row(
-
             children: <Widget>[
-              Text('Skills : ',style: TextStyle( fontWeight:FontWeight.bold)),
+              Text('Skills : ', style: TextStyle(fontWeight: FontWeight.bold)),
               Text('Tenses'),
               Checkbox(
                 value: false,
-                onChanged: (val){
-
-                },
+                onChanged: (val) {},
               ),
               Text('Prepositions'),
               Checkbox(
                 value: false,
-                onChanged: (val){
-
-                },
+                onChanged: (val) {},
               )
             ],
           ),
-
         ),
 
         RaisedButton(
@@ -335,7 +336,12 @@ class _LoginPageState extends State<Login> {
           height: 50.0,
         ),
         InkWell(
-          child: Text('SignIn', style: new TextStyle(color: Colors.deepOrange, decoration: TextDecoration.underline,fontSize:18,fontWeight: FontWeight.bold)),
+          child: Text('SignIn',
+              style: new TextStyle(
+                  color: Colors.deepOrange,
+                  decoration: TextDecoration.underline,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold)),
           onTap: () => openLoginScreen(),
         )
       ],
@@ -344,7 +350,7 @@ class _LoginPageState extends State<Login> {
 
   void performSignup() {
     FocusScope.of(_signupFormKey.currentContext).requestFocus(new FocusNode());
-    if(_signupFormKey.currentState.validate()) {
+    if (_signupFormKey.currentState.validate()) {
       _signupFormKey.currentState.save();
       createUser();
     } else {
@@ -357,31 +363,35 @@ class _LoginPageState extends State<Login> {
   Future<User> createUser() async {
     Firestore db = Firestore.instance;
     final TransactionHandler createTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(db.collection('user').document());
+      final DocumentSnapshot ds =
+          await tx.get(db.collection('user').document());
       var dataMap = new Map<String, dynamic>();
 
-      QuerySnapshot querySnapshot = await Firestore.instance. collection("user").getDocuments();
+      QuerySnapshot querySnapshot =
+          await Firestore.instance.collection("user").getDocuments();
       bool result = true;
-      for(DocumentSnapshot documents in querySnapshot.documents) {
-        if(documents.data['email'].toString().compareTo(_signupEmail) == 0) {
+      for (DocumentSnapshot documents in querySnapshot.documents) {
+        if (documents.data['email'].toString().compareTo(_signupEmail) == 0) {
           result = false;
           break;
         }
       }
 
-      if(result) {
+      if (result) {
         dataMap['email'] = _signupEmail;
         dataMap['name'] = _signupName;
         dataMap['password'] = _signupPassword;
         dataMap['phone'] = _signupPhone;
         dataMap['usertype'] = _signupUserType;
         await tx.set(ds.reference, dataMap).then((void val) {
-          if(_signupUserType.compareTo('Learner') == 0) {
+          if (_signupUserType.compareTo('Learner') == 0) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) => new LearnScreen(email: _signupEmail, usertype: _signupUserType)));
-          } else if(_signupUserType.toString().compareTo('Mentor') == 0) {
+                builder: (BuildContext context) => new LearnScreen(
+                    email: _signupEmail, usertype: _signupUserType)));
+          } else if (_signupUserType.toString().compareTo('Mentor') == 0) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) => new MentorScreen(email: _signupEmail, usertype: _signupUserType)));
+                builder: (BuildContext context) => new MentorScreen(
+                    email: _signupEmail, usertype: _signupUserType)));
           }
         });
       } else {
@@ -403,8 +413,8 @@ class _LoginPageState extends State<Login> {
   }
 
   void openLoginScreen() {
-    Navigator.of(_signupFormKey.currentContext).pushReplacement(new MaterialPageRoute(
-        builder: (BuildContext context) => new Login(title: 'SignIn')));
+    Navigator.of(_signupFormKey.currentContext).pushReplacement(
+        new MaterialPageRoute(
+            builder: (BuildContext context) => new Login(title: 'SignIn')));
   }
 }
-

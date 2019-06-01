@@ -6,7 +6,6 @@ import 'package:learneasy/dialogflow/DialogFlowBotView.dart';
 import 'package:learneasy/view/list/LearnDetailList.dart';
 import 'package:learneasy/view/screen/LearnDetail.dart';
 
-
 class LessonItems extends StatelessWidget {
   BuildContext context;
   final String lesson;
@@ -19,13 +18,13 @@ class LessonItems extends StatelessWidget {
   Widget build(BuildContext context) {
     this.context = context;
     return Card(
-
       elevation: 10.0,
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
         decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
         child: ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           leading: Container(
             padding: EdgeInsets.only(right: 12.0),
             decoration: new BoxDecoration(
@@ -46,20 +45,23 @@ class LessonItems extends StatelessWidget {
             ],
           ),
           trailing:
-          Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-          onTap: (){
-            if(usertype.toString().compareTo('Learner') == 0) {
+              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          onTap: () {
+            if (usertype.toString().compareTo('Learner') == 0) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) =>
                       LearnDetail(title: lesson)));
             } else {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      LiveChat(userName: "Mentor", usertype: usertype, email: email,)));
+                  builder: (BuildContext context) => LiveChat(
+                        userName: "Mentor",
+                        usertype: usertype,
+                        email: email,
+                      )));
             }
-          },),
+          },
+        ),
       ),
     );
   }
-
 }

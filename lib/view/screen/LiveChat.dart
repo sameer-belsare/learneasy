@@ -20,20 +20,18 @@ class _LiveChat extends State<LiveChat> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
 
-
   void initState() {
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => connectToFriday());
+    WidgetsBinding.instance.addPostFrameCallback((_) => connectToFriday());
   }
 
-  void connectToFriday(){
+  void connectToFriday() {
     Response("Tenses");
   }
 
   Widget _buildTextComposer() {
     return new IconTheme(
-      data: new IconThemeData(color: Colors.deepOrange  ),
+      data: new IconThemeData(color: Colors.deepOrange),
       child: new Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(
@@ -43,7 +41,7 @@ class _LiveChat extends State<LiveChat> {
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
                 decoration:
-                new InputDecoration.collapsed(hintText: "Send a message"),
+                    new InputDecoration.collapsed(hintText: "Send a message"),
               ),
             ),
             new Container(
@@ -86,11 +84,9 @@ class _LiveChat extends State<LiveChat> {
       _messages.insert(0, message);
     });
 
-
     _pushChat(_textController);
 
     Response(text);
-
   }
 
   @override
@@ -103,11 +99,11 @@ class _LiveChat extends State<LiveChat> {
       body: new Column(children: <Widget>[
         new Flexible(
             child: new ListView.builder(
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) => _messages[index],
-              itemCount: _messages.length,
-            )),
+          padding: new EdgeInsets.all(8.0),
+          reverse: true,
+          itemBuilder: (_, int index) => _messages[index],
+          itemCount: _messages.length,
+        )),
         new Divider(height: 1.0),
         new Container(
           decoration: new BoxDecoration(color: Theme.of(context).cardColor),
@@ -117,14 +113,16 @@ class _LiveChat extends State<LiveChat> {
     );
   }
 
-
   _getChat() {
     Firestore db = Firestore.instance;
     final TransactionHandler createTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(db.collection('chat').document());
+      final DocumentSnapshot ds =
+          await tx.get(db.collection('chat').document());
 
-      QuerySnapshot querySnapshot = await Firestore.instance. collection("chat").getDocuments();
-      DocumentSnapshot documents = querySnapshot.documents.elementAt(querySnapshot.documents.length - 1);
+      QuerySnapshot querySnapshot =
+          await Firestore.instance.collection("chat").getDocuments();
+      DocumentSnapshot documents =
+          querySnapshot.documents.elementAt(querySnapshot.documents.length - 1);
       print(documents.data['agentid'].toString());
       print(documents.data['agentmessage'].toString());
       print(documents.data['userid'].toString());
@@ -145,13 +143,13 @@ class _LiveChat extends State<LiveChat> {
   Future<Chat> _pushChat(TextEditingController textController) {
     Firestore db = Firestore.instance;
     final TransactionHandler createTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(
-          db.collection('chat').document());
+      final DocumentSnapshot ds =
+          await tx.get(db.collection('chat').document());
       var dataMap = new Map<String, dynamic>();
 
-      dataMap['agentid'] = /*widget.email*/'alok.kulkarni@gmail.com';
+      dataMap['agentid'] = /*widget.email*/ 'alok.kulkarni@gmail.com';
       dataMap['agentmessage'] = textController.text;
-      dataMap['userid'] = /*widget.usertype*/'nikhil.jadhav@gmail.com';
+      dataMap['userid'] = /*widget.usertype*/ 'nikhil.jadhav@gmail.com';
       dataMap['usermessage'] = textController.text;
       await tx.set(ds.reference, dataMap);
       return dataMap;
@@ -182,7 +180,8 @@ class ChatMessage extends StatelessWidget {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(this.name, style:new TextStyle(fontWeight:FontWeight.bold )),
+            new Text(this.name,
+                style: new TextStyle(fontWeight: FontWeight.bold)),
             new Container(
               margin: const EdgeInsets.only(top: 5.0),
               child: new Text(text),
@@ -224,7 +223,4 @@ class ChatMessage extends StatelessWidget {
       ),
     );
   }
-
-
-
 }

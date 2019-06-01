@@ -50,7 +50,8 @@ class _ChatWindowState extends State<ChatWindow> {
                       suffixIcon: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () {
-                            FocusScope.of(context).requestFocus(new FocusNode());
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode());
                             _pushChat(textController);
                             _getChat();
                           }),
@@ -75,10 +76,12 @@ class _ChatWindowState extends State<ChatWindow> {
   _getChat() {
     Firestore db = Firestore.instance;
     final TransactionHandler createTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(db.collection('chat').document());
+      final DocumentSnapshot ds =
+          await tx.get(db.collection('chat').document());
 
-      QuerySnapshot querySnapshot = await Firestore.instance. collection("chat").getDocuments();
-      for(DocumentSnapshot documents in querySnapshot.documents) {
+      QuerySnapshot querySnapshot =
+          await Firestore.instance.collection("chat").getDocuments();
+      for (DocumentSnapshot documents in querySnapshot.documents) {
         print(documents.data['agentid'].toString());
         print(documents.data['agentmessage'].toString());
         print(documents.data['userid'].toString());
@@ -100,13 +103,13 @@ class _ChatWindowState extends State<ChatWindow> {
   Future<Chat> _pushChat(TextEditingController textController) {
     Firestore db = Firestore.instance;
     final TransactionHandler createTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(
-          db.collection('chat').document());
+      final DocumentSnapshot ds =
+          await tx.get(db.collection('chat').document());
       var dataMap = new Map<String, dynamic>();
 
-      dataMap['agentid'] = /*widget.email*/'alok.kulkarni@gmail.com';
+      dataMap['agentid'] = /*widget.email*/ 'alok.kulkarni@gmail.com';
       dataMap['agentmessage'] = textController.text;
-      dataMap['userid'] = /*widget.usertype*/'nikhil.jadhav@gmail.com';
+      dataMap['userid'] = /*widget.usertype*/ 'nikhil.jadhav@gmail.com';
       dataMap['usermessage'] = textController.text;
       await tx.set(ds.reference, dataMap);
       return dataMap;

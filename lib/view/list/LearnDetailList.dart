@@ -4,7 +4,6 @@ import 'package:learneasy/view/list/LearnDetailList.dart';
 import 'package:learneasy/view/list/LessionDetailItem.dart';
 
 class LearnDetailList extends StatefulWidget {
-
   final String title;
   LearnDetailList({Key key, this.title}) : super(key: key);
   @override
@@ -12,7 +11,6 @@ class LearnDetailList extends StatefulWidget {
 }
 
 class _LearnDetailListState extends State<LearnDetailList> {
-
   List<String> learnList = List();
 
   @override
@@ -32,5 +30,4 @@ class _LearnDetailListState extends State<LearnDetailList> {
           return LessonDetailItems(title: lesson);
         });
   }
-
 }

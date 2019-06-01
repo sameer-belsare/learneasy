@@ -17,20 +17,18 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
 
-
   void initState() {
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => connectToFriday());
+    WidgetsBinding.instance.addPostFrameCallback((_) => connectToFriday());
   }
 
-  void connectToFriday(){
+  void connectToFriday() {
     Response("Tenses");
   }
 
   Widget _buildTextComposer() {
     return new IconTheme(
-      data: new IconThemeData(color: Colors.deepOrange  ),
+      data: new IconThemeData(color: Colors.deepOrange),
       child: new Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(
@@ -40,7 +38,7 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
                 controller: _textController,
                 onSubmitted: _handleSubmitted,
                 decoration:
-                new InputDecoration.collapsed(hintText: "Send a message"),
+                    new InputDecoration.collapsed(hintText: "Send a message"),
               ),
             ),
             new Container(
@@ -57,23 +55,30 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
 
   void Response(query) async {
     _textController.clear();
-    AuthGoogle authGoogle = await AuthGoogle(fileJson: "assets/sample_auth_json.json").build();
-    Dialogflow dialogflow =Dialogflow(authGoogle: authGoogle,language: Language.english);
+    AuthGoogle authGoogle =
+        await AuthGoogle(fileJson: "assets/sample_auth_json.json").build();
+    Dialogflow dialogflow =
+        Dialogflow(authGoogle: authGoogle, language: Language.english);
     AIResponse response = await dialogflow.detectIntent(query);
     ChatMessage message = new ChatMessage(
-      text: response.getMessage() ?? new CardDialogflow(response.getListMessage()[0]).title,
+      text: response.getMessage() ??
+          new CardDialogflow(response.getListMessage()[0]).title,
       name: "Friday",
       type: false,
     );
     setState(() {
       _messages.insert(0, message);
     });
-    if(response.queryResult.parameters.isNotEmpty){
+    if (response.queryResult.parameters.isNotEmpty) {
 //      CircularProgressIndicator();
 //      sleep(const Duration(seconds: 5));
 
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (BuildContext context) => new LiveChat(userName: "", usertype: "", email: "",)));
+          builder: (BuildContext context) => new LiveChat(
+                userName: "",
+                usertype: "",
+                email: "",
+              )));
     }
   }
 
@@ -100,11 +105,11 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
       body: new Column(children: <Widget>[
         new Flexible(
             child: new ListView.builder(
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) => _messages[index],
-              itemCount: _messages.length,
-            )),
+          padding: new EdgeInsets.all(8.0),
+          reverse: true,
+          itemBuilder: (_, int index) => _messages[index],
+          itemCount: _messages.length,
+        )),
         new Divider(height: 1.0),
         new Container(
           decoration: new BoxDecoration(color: Theme.of(context).cardColor),
@@ -132,7 +137,8 @@ class ChatMessage extends StatelessWidget {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text(this.name, style:new TextStyle(fontWeight:FontWeight.bold )),
+            new Text(this.name,
+                style: new TextStyle(fontWeight: FontWeight.bold)),
             new Container(
               margin: const EdgeInsets.only(top: 5.0),
               child: new Text(text),
