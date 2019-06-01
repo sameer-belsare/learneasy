@@ -16,7 +16,7 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
 
   Widget _buildTextComposer() {
     return new IconTheme(
-      data: new IconThemeData(color: Theme.of(context).accentColor),
+      data: new IconThemeData(color: Colors.deepOrange  ),
       child: new Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(
@@ -50,6 +50,7 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
       text: response.getMessage() ?? new CardDialogflow(response.getListMessage()[0]).title,
       name: "Friday",
       type: false,
+
     );
     setState(() {
       _messages.insert(0, message);
@@ -73,7 +74,8 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Dialogflow V2"),
+        title: new Text("Learn Tenses with Friday"),
+        backgroundColor: Colors.deepOrange,
       ),
       body: new Column(children: <Widget>[
         new Flexible(
@@ -104,7 +106,7 @@ class ChatMessage extends StatelessWidget {
     return <Widget>[
       new Container(
         margin: const EdgeInsets.only(right: 16.0),
-        child: new CircleAvatar(child: new Image.asset("img/placeholder.png")),
+        child: new CircleAvatar(child: new Image.asset("assets/friday.jpg")),
       ),
       new Expanded(
         child: new Column(

@@ -51,6 +51,7 @@ flutter:
   assets:
     - assets/mentormatcher-orrpuy-7becd7d10d8d.json
     - assets/sample_auth_json.json
+    - assets/friday.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

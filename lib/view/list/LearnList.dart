@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:learneasy/view/list/LessonItems.dart';
 class LearnList extends StatefulWidget {
+
+  LearnList(String s){
+    this.title = s;
+  }
+  String title;
+
   @override
-  _LearnListState createState() => _LearnListState();
+  _LearnListState createState() => _LearnListState(title);
 }
 
 class _LearnListState extends State<LearnList> {
-
+  _LearnListState(String s){
+    this.title = s;
+  }
+  String title;
   List<String> learnList = List();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    learnList.add("Learn English");
+    learnList.add(title);
   }
 
   @override

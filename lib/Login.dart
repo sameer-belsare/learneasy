@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:learneasy/view/screen/MentorScreen.dart';
 import 'User.dart';
 import 'package:learneasy/view/screen/HomeScreen.dart';
 import 'view/screen/LearnScreen.dart';
@@ -126,8 +127,13 @@ class _LoginPageState extends State<Login> {
             content: new Text("Login success"),
             duration: Duration(milliseconds: 500),
           ));
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) => new LearnScreen()));
+          if(documents.data['usertype'].toString().compareTo('Learner') == 0) {
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (BuildContext context) => new LearnScreen()));
+          } else{
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (BuildContext context) => new MentorScreen()));
+          }
           result = true;
           break;
         }
