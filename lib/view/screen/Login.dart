@@ -279,9 +279,7 @@ class _LoginPageState extends State<Login> {
             );
           }).toList(),
           onChanged: (value) {
-            setState(() {
               _signupUserType = value;
-            });
           },
         ),
         SizedBox(
@@ -383,15 +381,15 @@ class _LoginPageState extends State<Login> {
         dataMap['password'] = _signupPassword;
         dataMap['phone'] = _signupPhone;
         dataMap['usertype'] = _signupUserType;
-        await tx.set(ds.reference, dataMap).then((void val) {
-          if (_signupUserType.compareTo('Learner') == 0) {
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+        await tx.set(ds.reference, dataMap).then((val) {
+          if (dataMap['usertype'].compareTo('Learner') == 0) {
+            Navigator.of(_signupFormKey.currentContext).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) => new LearnScreen(
-                    email: _signupEmail, usertype: _signupUserType)));
-          } else if (_signupUserType.toString().compareTo('Mentor') == 0) {
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                    email: dataMap['email'], usertype: dataMap['usertype'])));
+          } else if (dataMap['usertype'].toString().compareTo('Mentor') == 0) {
+            Navigator.of(_signupFormKey.currentContext).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) => new MentorScreen(
-                    email: _signupEmail, usertype: _signupUserType)));
+                    email: dataMap['email'], usertype: dataMap['usertype'])));
           }
         });
       } else {
