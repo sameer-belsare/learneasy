@@ -157,7 +157,7 @@ class _LoginPageState extends State<Login> {
   }
 
   void openSignupScreen() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       //Navigator.pushReplacement(context,
       new MaterialPageRoute<void>(
           builder: (BuildContext context) {
@@ -336,7 +336,8 @@ class _LoginPageState extends State<Login> {
   }
 
   void openLoginScreen() {
-    Navigator.pop(context);
+    Navigator.of(_signupFormKey.currentContext).pushReplacement(new MaterialPageRoute(
+        builder: (BuildContext context) => new Login(title: 'SignIn')));
   }
 }
 
