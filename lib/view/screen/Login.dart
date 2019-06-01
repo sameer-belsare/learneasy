@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:learneasy/view/screen/MentorScreen.dart';
-import 'User.dart';
-import 'view/screen/LearnScreen.dart';
+import 'package:learneasy/data/local/db/table/User.dart';
+import 'LearnScreen.dart';
 
 class Login extends StatefulWidget {
   Login({Key key, this.title}) : super(key: key);

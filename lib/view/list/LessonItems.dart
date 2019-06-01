@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:learneasy/model/Chats.dart';
 import 'package:learneasy/view/screen/LiveChat.dart';
-import 'package:learneasy/dialogflow/DialogFlowBotView.dart';
-import 'package:learneasy/view/list/LearnDetailList.dart';
 import 'package:learneasy/view/screen/LearnDetail.dart';
 
 class LessonItems extends StatelessWidget {

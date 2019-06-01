@@ -1,12 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:learneasy/view/list/ChatList.dart';
-import 'package:learneasy/view/list/statusList.dart';
-import 'package:learneasy/viewmodel/HomeViewModel.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:learneasy/data/remote/service/ApiService.dart';
-import 'package:learneasy/view/screen/LearnDetail.dart';
-import 'package:learneasy/view/list/LearnList.dart';
 import 'package:learneasy/view/list/LearnDetailList.dart';
 
 class LearnDetail extends StatefulWidget {
