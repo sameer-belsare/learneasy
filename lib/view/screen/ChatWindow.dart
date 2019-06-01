@@ -4,19 +4,21 @@ import 'Chat.dart';
 
 class ChatWindow extends StatefulWidget {
   var userName;
-  ChatWindow({this.userName});
+  var email;
+  var usertype;
+  ChatWindow({this.userName, this.email, this.usertype});
   @override
   _ChatWindowState createState() => _ChatWindowState();
 }
 
 class _ChatWindowState extends State<ChatWindow> {
-  String text = 'ABC';
+  String text = '';
   TextEditingController textController = TextEditingController();
 
-  String _chatAgentId = '1';
-  String _chatAgentMessage = 'Hi';
-  String _chatUserId = '2';
-  String _chatUserMessage = 'Hello';
+  String _chatAgentId;
+  String _chatAgentMessage;
+  String _chatUserId;
+  String _chatUserMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class _ChatWindowState extends State<ChatWindow> {
       title: 'Chat Window',
       home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.deepOrange,
             leading: CircleAvatar(
               backgroundColor: Colors.white,
               child: Text(
@@ -48,11 +50,8 @@ class _ChatWindowState extends State<ChatWindow> {
                       suffixIcon: IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () {
-                            setState(() {
-                              text = text + '\n' + textController.text;
-                              textController.text = '';
-                            });
-                            _pushChat();
+                            FocusScope.of(context).requestFocus(new FocusNode());
+                            _pushChat(textController);
                             _getChat();
                           }),
                       border: OutlineInputBorder(
@@ -86,26 +85,36 @@ class _ChatWindowState extends State<ChatWindow> {
         print(documents.data['usermessage'].toString());
       }
     };
+    return Firestore.instance.runTransaction(createTransaction).then((mapData) {
+      setState(() {
+        text = textController.text;
+        textController.text = '';
+      });
+      return Chat.fromMap(mapData);
+    }).catchError((error) {
+      print('Get chat error: $error');
+      return null;
+    });
   }
 
-  Future<Chat> _pushChat() {
+  Future<Chat> _pushChat(TextEditingController textController) {
     Firestore db = Firestore.instance;
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot ds = await tx.get(
           db.collection('chat').document());
       var dataMap = new Map<String, dynamic>();
 
-      dataMap['agentid'] = _chatAgentId;
-      dataMap['agentmessage'] = _chatAgentMessage;
-      dataMap['userid'] = _chatUserId;
-      dataMap['usermessage'] = _chatUserMessage;
+      dataMap['agentid'] = /*widget.email*/'alok.kulkarni@gmail.com';
+      dataMap['agentmessage'] = textController.text;
+      dataMap['userid'] = /*widget.usertype*/'nikhil.jadhav@gmail.com';
+      dataMap['usermessage'] = textController.text;
       await tx.set(ds.reference, dataMap);
       return dataMap;
     };
     return Firestore.instance.runTransaction(createTransaction).then((mapData) {
       return Chat.fromMap(mapData);
     }).catchError((error) {
-      print('error: $error');
+      print('Push chat error: $error');
       return null;
     });
   }

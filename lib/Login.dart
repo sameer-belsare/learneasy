@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:learneasy/view/screen/MentorScreen.dart';
 import 'User.dart';
-import 'package:learneasy/view/screen/HomeScreen.dart';
 import 'view/screen/LearnScreen.dart';
 
 class Login extends StatefulWidget {
@@ -130,10 +129,10 @@ class _LoginPageState extends State<Login> {
             content: new Text("Login success"),
             duration: Duration(milliseconds: 500),
           ));
-          if(documents.data['usertype'].toString().compareTo('Learner') == 0) {
+          if(documents.data['usertype'] == null) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) => new LearnScreen()));
-          } else{
+          } else if(documents.data['usertype'].toString().compareTo('Mentor') == 0){
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) => new MentorScreen()));
           }
@@ -381,7 +380,7 @@ class _LoginPageState extends State<Login> {
         dataMap['usertype'] = _signupUserType;
         await tx.set(ds.reference, dataMap).then((void val) {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) => new HomeScreen()));
+              builder: (BuildContext context) => new LearnScreen(email: _signupEmail, usertype: _signupUserType)));
         });
       } else {
         Scaffold.of(_signupFormKey.currentContext).showSnackBar(new SnackBar(
