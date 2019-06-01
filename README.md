@@ -12,9 +12,9 @@ https://www.youtube.com/watch?v=AbthKUW-2Gw&feature=youtu.be
 
 # Credentials for login
 Mentor -> <br>
-email: alok.kulkarni@gmail.com
-pass: alok
+email: alok.kulkarni@gmail.com <br>
+pass: alok <br>
 
-Learner ->
-email: nikhil.jadhav@gmail.com
+Learner -> <br>
+email: nikhil.jadhav@gmail.com <br>
 pass: nikhil
