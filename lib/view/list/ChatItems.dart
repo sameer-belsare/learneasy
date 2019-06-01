@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:learneasy/dialogflow/DialogFlowBotView.dart';
 import 'package:learneasy/model/Chats.dart';
-import 'package:learneasy/view/screen/ChatWindow.dart';
 
 class ChatItems extends StatelessWidget {
   final Chats chats;
@@ -35,7 +35,7 @@ class ChatItems extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) =>
-                ChatWindow(userName: chats.title)));
+                HomePageDialogflowV2(title: chats.title)));
       },
     );
   }
