@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'viewmodel/HomeViewModel.dart';
 import 'view/screen/SplashScreen.dart';
-import 'view/screen/HomeScreen.dart';
-import 'data/remote/service/ApiService.dart';
 import 'Login.dart';
 
 void main() => runApp(LearnEasyApp());
