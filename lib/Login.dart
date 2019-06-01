@@ -25,6 +25,7 @@ class _LoginPageState extends State<Login> {
   String _signupEmail;
   String _signupPassword;
   String _signupPhone;
+  String _signupUserType = 'Learner';
   bool _signupObscureText = true;
 
   @override
@@ -247,6 +248,20 @@ class _LoginPageState extends State<Login> {
             _signupPhone = val;
           },
         ),
+        DropdownButton<String>(
+          hint: Text('Select User Type'),
+        items: <String>['Mentor', 'Learner'].map((String value) {
+        return DropdownMenuItem<String>(
+        value: value,
+        child: new Text(value),
+        );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            _signupUserType = value;
+          });
+        },
+        ),
         SizedBox(
           height: 10.0,
         ),
@@ -297,6 +312,7 @@ class _LoginPageState extends State<Login> {
         dataMap['name'] = _signupName;
         dataMap['password'] = _signupPassword;
         dataMap['phone'] = _signupPhone;
+        dataMap['usertype'] = _signupUserType;
         await tx.set(ds.reference, dataMap).then((void val) {
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) => new HomeScreen()));
