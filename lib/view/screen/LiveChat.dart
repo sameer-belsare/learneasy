@@ -4,9 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Chat.dart';
 
 class LiveChat extends StatefulWidget {
-  LiveChat({Key key, this.title}) : super(key: key);
+  var userName;
+  var email;
+  var usertype;
+  LiveChat({this.userName, this.email, this.usertype});
 
-  final String title;
+  //final String title;
 
   @override
   _LiveChat createState() => new _LiveChat();
@@ -63,8 +66,8 @@ class _LiveChat extends State<LiveChat> {
     _getChat();
 
     ChatMessage message = new ChatMessage(
-      text: text,//response.getMessage() ?? new CardDialogflow(response.getListMessage()[0]).title,
-      name: "Friday",
+      text: "hi",
+      name: "Mentor",
       type: false,
     );
     setState(() {
@@ -76,7 +79,7 @@ class _LiveChat extends State<LiveChat> {
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
-      name: "Mentee",
+      name: "Learner",
       type: true,
     );
     setState(() {
@@ -94,7 +97,7 @@ class _LiveChat extends State<LiveChat> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Learn with Friday - AI"),
+        title: new Text("Live with Mentor"),
         backgroundColor: Colors.deepOrange,
       ),
       body: new Column(children: <Widget>[
@@ -121,12 +124,6 @@ class _LiveChat extends State<LiveChat> {
       final DocumentSnapshot ds = await tx.get(db.collection('chat').document());
 
       QuerySnapshot querySnapshot = await Firestore.instance. collection("chat").getDocuments();
-      /*for(DocumentSnapshot documents in querySnapshot.documents) {
-        print(documents.data['agentid'].toString());
-        print(documents.data['agentmessage'].toString());
-        print(documents.data['userid'].toString());
-        print(documents.data['usermessage'].toString());
-      }*/
       DocumentSnapshot documents = querySnapshot.documents.elementAt(querySnapshot.documents.length - 1);
       print(documents.data['agentid'].toString());
       print(documents.data['agentmessage'].toString());

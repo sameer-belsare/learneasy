@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
-import 'package:learneasy/view/screen/ChatWindow.dart';
+import 'package:learneasy/view/screen/LiveChat.dart';
 
 class HomePageDialogflowV2 extends StatefulWidget {
   HomePageDialogflowV2({Key key, this.title}) : super(key: key);
@@ -73,7 +73,7 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
 //      sleep(const Duration(seconds: 5));
 
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (BuildContext context) => new ChatWindow(userName: "", usertype: "", email: "",)));
+          builder: (BuildContext context) => new LiveChat(userName: "", usertype: "", email: "",)));
     }
   }
 
