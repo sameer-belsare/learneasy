@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
@@ -18,8 +17,17 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.deepOrange,
       body: Center(
-        child: Icon(FontAwesomeIcons.facebookMessenger,
-            size: 80, color: Colors.white),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.asset('assets/launcher.png', width: 200, height: 200),
+            SizedBox(
+              height: 30.0,
+            ),
+            Text('Learn Easy',
+                style: TextStyle(color: Colors.blueGrey, fontSize: 30)),
+          ],
+        ),
       ),
     );
   }
