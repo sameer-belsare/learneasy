@@ -100,6 +100,9 @@ class _LoginPageState extends State<Login> {
           height: 10.0,
         ),
         RaisedButton(
+          highlightColor: Colors.deepOrange,
+          color: Colors.deepOrangeAccent,
+          textColor: Colors.white,
           onPressed: () => performLogin(snapshot),
           child: new Text('SignIn'),
         ),
@@ -107,7 +110,7 @@ class _LoginPageState extends State<Login> {
           height: 50.0,
         ),
         InkWell(
-          child: Text('SignUp', style: new TextStyle(color: Colors.deepOrange, decoration: TextDecoration.underline),),
+          child: Text('SignUp', style: new TextStyle(color: Colors.deepOrange,fontSize: 18, decoration: TextDecoration.underline,fontWeight: FontWeight.bold),),
           onTap: () => openSignupScreen(),
         )
       ],
@@ -255,8 +258,12 @@ class _LoginPageState extends State<Login> {
             _signupPhone = val;
           },
         ),
+    Container(
+    child: Row(
+    children: <Widget>[
+        Text("Your are $_signupUserType :   ",style: TextStyle( fontWeight:FontWeight.bold)),
         DropdownButton<String>(
-          hint: Text('Select User Type'),
+          hint: Text('select other'),
         items: <String>['Mentor', 'Learner'].map((String value) {
         return DropdownMenuItem<String>(
         value: value,
@@ -268,7 +275,7 @@ class _LoginPageState extends State<Login> {
             _signupUserType = value;
           });
         },
-        ),
+        )])),
         SizedBox(
           height: 10.0,
         ),
@@ -277,7 +284,7 @@ class _LoginPageState extends State<Login> {
           child: Row(
             children: <Widget>[
 
-              Text('Language : ',style: TextStyle( fontWeight:FontWeight.bold),),
+              Text('Language : ',style: TextStyle( fontWeight:FontWeight.bold)),
               Text('English'),
               Checkbox(
                 value: false,
@@ -322,6 +329,9 @@ class _LoginPageState extends State<Login> {
         ),
 
         RaisedButton(
+          highlightColor: Colors.deepOrange,
+          color: Colors.deepOrangeAccent,
+          textColor: Colors.white,
           onPressed: performSignup,
           child: new Text('SignUp'),
         ),
@@ -329,7 +339,7 @@ class _LoginPageState extends State<Login> {
           height: 50.0,
         ),
         InkWell(
-          child: Text('SignIn', style: new TextStyle(color: Colors.deepOrange, decoration: TextDecoration.underline),),
+          child: Text('SignIn', style: new TextStyle(color: Colors.deepOrange, decoration: TextDecoration.underline,fontSize:18,fontWeight: FontWeight.bold)),
           onTap: () => openLoginScreen(),
         )
       ],
