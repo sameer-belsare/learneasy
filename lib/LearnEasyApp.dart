@@ -14,7 +14,7 @@ class LearnEasyApp extends StatelessWidget {
         title: 'Learn Easy',
         home: SplashScreen(),
         routes: <String, WidgetBuilder>{
-          '/Login': (BuildContext content) => Login(title: 'LOGIN')
+          '/Login': (BuildContext content) => Login(title: 'SignIn')
         },
         debugShowCheckedModeBanner: false);
   }

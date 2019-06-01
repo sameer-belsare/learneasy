@@ -32,6 +32,7 @@ class _LoginPageState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepOrange,
         title: Text(widget.title),
       ),
       resizeToAvoidBottomPadding: false,
@@ -98,13 +99,13 @@ class _LoginPageState extends State<Login> {
         ),
         RaisedButton(
           onPressed: () => performLogin(snapshot),
-          child: new Text('Login'),
+          child: new Text('SignIn'),
         ),
         SizedBox(
           height: 50.0,
         ),
         InkWell(
-          child: Text('Register', style: new TextStyle(color: Colors.blue, decoration: TextDecoration.underline),),
+          child: Text('SignUp', style: new TextStyle(color: Colors.deepOrange, decoration: TextDecoration.underline),),
           onTap: () => openSignupScreen(),
         )
       ],
@@ -112,10 +113,7 @@ class _LoginPageState extends State<Login> {
   }
 
   void performLogin(AsyncSnapshot snapshot) {
-    /*Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Text("Login clicked"),
-      duration: Duration(milliseconds: 100),
-    ));*/
+    FocusScope.of(context).requestFocus(new FocusNode());
     bool result = false;
     if(_loginFormKey.currentState.validate()) {
       _loginFormKey.currentState.save();
@@ -123,10 +121,10 @@ class _LoginPageState extends State<Login> {
       for(DocumentSnapshot documents in snapshot.data.documents) {
         if(documents.data['email'].toString().compareTo(_loginEmail) == 0 &&
             documents.data['password'].toString().compareTo(_loginPassword) == 0) {
-          /*Scaffold.of(context).showSnackBar(new SnackBar(
+          Scaffold.of(_loginFormKey.currentContext).showSnackBar(new SnackBar(
             content: new Text("Login success"),
-            duration: Duration(milliseconds: 100),
-          ));*/
+            duration: Duration(milliseconds: 500),
+          ));
           Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) => new LearnScreen()));
           result = true;
@@ -134,10 +132,10 @@ class _LoginPageState extends State<Login> {
         }
       }
       if(result == false) {
-        /*Scaffold.of(context).showSnackBar(new SnackBar(
+        Scaffold.of(_loginFormKey.currentContext).showSnackBar(new SnackBar(
           content: new Text("Invalid credentials"),
-          duration: Duration(milliseconds: 100),
-        ));*/
+          duration: Duration(milliseconds: 500),
+        ));
       }
     } else {
       setState(() {
@@ -165,7 +163,8 @@ class _LoginPageState extends State<Login> {
           builder: (BuildContext context) {
             return new Scaffold(
               appBar: new AppBar(
-                title: const Text('REGISTER'),
+                backgroundColor: Colors.deepOrange,
+                title: const Text('SignUp'),
               ),
               resizeToAvoidBottomPadding: false,
               body: new Container(
@@ -254,13 +253,13 @@ class _LoginPageState extends State<Login> {
         ),
         RaisedButton(
           onPressed: performSignup,
-          child: new Text('Register'),
+          child: new Text('SignUp'),
         ),
         SizedBox(
           height: 50.0,
         ),
         InkWell(
-          child: Text('Login', style: new TextStyle(color: Colors.blue, decoration: TextDecoration.underline),),
+          child: Text('SignIn', style: new TextStyle(color: Colors.deepOrange, decoration: TextDecoration.underline),),
           onTap: () => openLoginScreen(),
         )
       ],
@@ -268,30 +267,10 @@ class _LoginPageState extends State<Login> {
   }
 
   void performSignup() {
-    /*Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Text("Register clicked"),
-      duration: Duration(milliseconds: 200),
-    ));*/
+    FocusScope.of(_signupFormKey.currentContext).requestFocus(new FocusNode());
     if(_signupFormKey.currentState.validate()) {
       _signupFormKey.currentState.save();
-
-      /*Future<User> user = createUser();
-      if(user.asStream().isEmpty == true) {
-        Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text("Signup failed"),
-          duration: Duration(milliseconds: 100),
-        ));
-      } else {
-        Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text("Signup success"),
-          duration: Duration(milliseconds: 100),
-        ));
-      }*/
       createUser();
-      /*Scaffold.of(context).showSnackBar(new SnackBar(
-        content: new Text("Signup success"),
-        duration: Duration(milliseconds: 100),
-      ));*/
     } else {
       setState(() {
         _signupAutoValidate = true;
@@ -301,7 +280,6 @@ class _LoginPageState extends State<Login> {
 
   Future<User> createUser() async {
     Firestore db = Firestore.instance;
-    //CollectionReference userCollectionRef = db.collection('Users');
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot ds = await tx.get(db.collection('user').document());
       var dataMap = new Map<String, dynamic>();
@@ -320,7 +298,15 @@ class _LoginPageState extends State<Login> {
         dataMap['name'] = _signupName;
         dataMap['password'] = _signupPassword;
         dataMap['phone'] = _signupPhone;
-        await tx.set(ds.reference, dataMap);
+        await tx.set(ds.reference, dataMap).then((void val) {
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) => new HomeScreen()));
+        });
+      } else {
+        Scaffold.of(_signupFormKey.currentContext).showSnackBar(new SnackBar(
+          content: new Text("User Already Exists"),
+          duration: Duration(milliseconds: 500),
+        ));
       }
 
       return dataMap;
@@ -336,33 +322,6 @@ class _LoginPageState extends State<Login> {
 
   void openLoginScreen() {
     Navigator.pop(context);
-    /*Navigator.pushReplacement(context,
-      new MaterialPageRoute<void>(
-          builder: (BuildContext context) {
-            return new Scaffold(
-              appBar: new AppBar(
-                title: const Text('Login'),
-              ),
-              resizeToAvoidBottomPadding: false,
-              body: StreamBuilder(
-                  stream: Firestore.instance.collection('Users').snapshots(),
-                  builder: (context, snapshot) {
-                    if(!snapshot.hasData) return const Text('No data..');
-                    return Container(
-                      //margin: const EdgeInsets.only(left: 10.0, top: 20.0),
-                      margin: new EdgeInsets.all(15.0),
-                      child: new Form(
-                        key: _loginFormKey,
-                        autovalidate: _loginAutoValidate,
-                        child: LoginFormUI(snapshot),
-                      ),
-                    );
-                  }
-              ),
-            );
-          }
-      ),
-    );*/
   }
 }
 
