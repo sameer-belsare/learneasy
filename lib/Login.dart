@@ -127,10 +127,10 @@ class _LoginPageState extends State<Login> {
             content: new Text("Login success"),
             duration: Duration(milliseconds: 500),
           ));
-          if(documents.data['usertype'].toString().compareTo('Learner') == 0) {
+          if(documents.data['usertype'] == null) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) => new LearnScreen()));
-          } else{
+          } else if(documents.data['usertype'].toString().compareTo('Mentor') == 0){
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) => new MentorScreen()));
           }
