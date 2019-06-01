@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.deepOrange,
       body: Center(
         child: Icon(FontAwesomeIcons.facebookMessenger,
             size: 80, color: Colors.white),
