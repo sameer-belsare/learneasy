@@ -1,10 +1,8 @@
-
 class Chat {
   String _agentid;
   String _agentmessage;
   String _userid;
   String _usermessage;
-
 
   Chat(this._agentid, this._agentmessage, this._userid, this._usermessage);
 

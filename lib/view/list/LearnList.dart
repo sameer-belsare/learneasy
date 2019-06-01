@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learneasy/view/list/LessonItems.dart';
-class LearnList extends StatefulWidget {
 
+class LearnList extends StatefulWidget {
   /*LearnList(String s){
     this.title = s;
   }*/
@@ -16,7 +16,7 @@ class LearnList extends StatefulWidget {
 }
 
 class _LearnListState extends State<LearnList> {
-  _LearnListState(String s){
+  _LearnListState(String s) {
     this.title = s;
   }
   String title;
@@ -31,7 +31,7 @@ class _LearnListState extends State<LearnList> {
 
   @override
   Widget build(BuildContext context) {
-     return ListView.builder(
+    return ListView.builder(
         itemCount: learnList.length,
         itemBuilder: (_, int index) {
           var lesson = learnList[index];

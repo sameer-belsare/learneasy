@@ -1,19 +1,22 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
-import 'package:learneasy/view/screen/LiveChat.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Chat.dart';
 
-class HomePageDialogflowV2 extends StatefulWidget {
-  HomePageDialogflowV2({Key key, this.title}) : super(key: key);
+class LiveChat extends StatefulWidget {
+  var userName;
+  var email;
+  var usertype;
+  LiveChat({this.userName, this.email, this.usertype});
 
-  final String title;
+  //final String title;
 
   @override
-  _HomePageDialogflowV2 createState() => new _HomePageDialogflowV2();
+  _LiveChat createState() => new _LiveChat();
 }
 
-class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
+class _LiveChat extends State<LiveChat> {
+  String text = '';
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
 
@@ -55,43 +58,34 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
 
   void Response(query) async {
     _textController.clear();
-    AuthGoogle authGoogle =
-        await AuthGoogle(fileJson: "assets/sample_auth_json.json").build();
-    Dialogflow dialogflow =
-        Dialogflow(authGoogle: authGoogle, language: Language.english);
-    AIResponse response = await dialogflow.detectIntent(query);
+    /*AuthGoogle authGoogle = await AuthGoogle(fileJson: "assets/sample_auth_json.json").build();
+    Dialogflow dialogflow =Dialogflow(authGoogle: authGoogle,language: Language.english);
+    AIResponse response = await dialogflow.detectIntent(query);*/
+    _getChat();
+
     ChatMessage message = new ChatMessage(
-      text: response.getMessage() ??
-          new CardDialogflow(response.getListMessage()[0]).title,
-      name: "Friday",
+      text: "hi",
+      name: "Mentor",
       type: false,
     );
     setState(() {
       _messages.insert(0, message);
     });
-    if (response.queryResult.parameters.isNotEmpty) {
-//      CircularProgressIndicator();
-//      sleep(const Duration(seconds: 5));
-
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (BuildContext context) => new LiveChat(
-                userName: "",
-                usertype: "",
-                email: "",
-              )));
-    }
   }
 
   void _handleSubmitted(String text) {
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
-      name: "Mentee",
+      name: "Learner",
       type: true,
     );
     setState(() {
       _messages.insert(0, message);
     });
+
+    _pushChat(_textController);
+
     Response(text);
   }
 
@@ -99,7 +93,7 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Learn with Friday - AI"),
+        title: new Text("Live with Mentor"),
         backgroundColor: Colors.deepOrange,
       ),
       body: new Column(children: <Widget>[
@@ -117,6 +111,55 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
         ),
       ]),
     );
+  }
+
+  _getChat() {
+    Firestore db = Firestore.instance;
+    final TransactionHandler createTransaction = (Transaction tx) async {
+      final DocumentSnapshot ds =
+          await tx.get(db.collection('chat').document());
+
+      QuerySnapshot querySnapshot =
+          await Firestore.instance.collection("chat").getDocuments();
+      DocumentSnapshot documents =
+          querySnapshot.documents.elementAt(querySnapshot.documents.length - 1);
+      print(documents.data['agentid'].toString());
+      print(documents.data['agentmessage'].toString());
+      print(documents.data['userid'].toString());
+      print(documents.data['usermessage'].toString());
+    };
+    return Firestore.instance.runTransaction(createTransaction).then((mapData) {
+      setState(() {
+        text = _textController.text;
+        _textController.text = '';
+      });
+      return Chat.fromMap(mapData);
+    }).catchError((error) {
+      print('Get chat error: $error');
+      return null;
+    });
+  }
+
+  Future<Chat> _pushChat(TextEditingController textController) {
+    Firestore db = Firestore.instance;
+    final TransactionHandler createTransaction = (Transaction tx) async {
+      final DocumentSnapshot ds =
+          await tx.get(db.collection('chat').document());
+      var dataMap = new Map<String, dynamic>();
+
+      dataMap['agentid'] = /*widget.email*/ 'alok.kulkarni@gmail.com';
+      dataMap['agentmessage'] = textController.text;
+      dataMap['userid'] = /*widget.usertype*/ 'nikhil.jadhav@gmail.com';
+      dataMap['usermessage'] = textController.text;
+      await tx.set(ds.reference, dataMap);
+      return dataMap;
+    };
+    return Firestore.instance.runTransaction(createTransaction).then((mapData) {
+      return Chat.fromMap(mapData);
+    }).catchError((error) {
+      print('Push chat error: $error');
+      return null;
+    });
   }
 }
 

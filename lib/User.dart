@@ -1,4 +1,3 @@
-
 class User {
   String _email;
   String _language;
@@ -7,8 +6,8 @@ class User {
   String _username;
   String _usertype;
 
-
-  User(this._email, this._language, this._password, this._phone, this._username, this._usertype);
+  User(this._email, this._language, this._password, this._phone, this._username,
+      this._usertype);
 
   User.map(dynamic obj) {
     this._email = obj['email'];
