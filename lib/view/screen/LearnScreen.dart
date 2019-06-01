@@ -35,7 +35,7 @@ class _LearnScreenState extends State<LearnScreen>
         title: Text('Learn Easy', style: TextStyle(color: Colors.white)),
        backgroundColor: Colors.deepOrange,
        ),
-        body: LearnList(),
+        body: LearnList('Learn English'),
       ),
     );
   }
