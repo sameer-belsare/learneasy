@@ -205,7 +205,7 @@ class ChatMessage extends StatelessWidget {
       ),
       new Container(
         margin: const EdgeInsets.only(left: 16.0),
-        child: new CircleAvatar(child: new Text(this.name[0])),
+        child: new CircleAvatar(child: new Text(this.name[0]), backgroundColor: Colors.deepOrange,),
       ),
     ];
   }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -70,15 +71,14 @@ class _HomePageDialogflowV2 extends State<HomePageDialogflowV2> {
       _messages.insert(0, message);
     });
     if (response.queryResult.parameters.isNotEmpty) {
-//      CircularProgressIndicator();
-//      sleep(const Duration(seconds: 5));
-
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (BuildContext context) => new LiveChat(
-                userName: "",
-                usertype: "",
-                email: "",
-              )));
+      Timer(Duration(seconds: 4), () {
+        Navigator.of(context).pushReplacement(new MaterialPageRoute(
+            builder: (BuildContext context) => new LiveChat(
+              userName: "",
+              usertype: "",
+              email: "",
+            )));
+      });
     }
   }
 
@@ -165,7 +165,7 @@ class ChatMessage extends StatelessWidget {
       ),
       new Container(
         margin: const EdgeInsets.only(left: 16.0),
-        child: new CircleAvatar(child: new Text(this.name[0])),
+        child: new CircleAvatar(child: new Text(this.name[0]), backgroundColor: Colors.deepOrange,),
       ),
     ];
   }
