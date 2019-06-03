@@ -17,6 +17,15 @@ https://docs.google.com/presentation/d/1JDRABB7G9buMokTXxY0OY6cUwUo2QH4mUK5dVHjD
 https://drive.google.com/file/d/17IYGe3NQftABoirO5CRMG3fC-4IXo9bM/view?usp=sharing
 https://www.youtube.com/watch?v=AbthKUW-2Gw&feature=youtu.be
 
+# Screenshots
+<img src="https://github.com/sameer-belsare/learneasy/blob/master/screenshot/login.png"/>
+<img src="https://github.com/sameer-belsare/learneasy/blob/master/screenshot/signup.png"/>
+<img src="https://github.com/sameer-belsare/learneasy/blob/master/screenshot/learnerhome.png"/>
+<img src="https://github.com/sameer-belsare/learneasy/blob/master/screenshot/mentorhome.png"/>
+<img src="https://github.com/sameer-belsare/learneasy/blob/master/screenshot/selectlesson.png"/>
+<img src="https://github.com/sameer-belsare/learneasy/blob/master/screenshot/botscreen.png"/>
+<img src="https://github.com/sameer-belsare/learneasy/blob/master/screenshot/livewithmentor.png"/>
+
 # Credentials for login
 Mentor -> <br>
 email: alok.kulkarni@gmail.com <br>
